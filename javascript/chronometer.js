@@ -11,6 +11,8 @@ class Chronometer {
       if(callback) callback();
     }, 1 * 1000);
 
+    
+
     this.intervalId = startInterval;
   }
 
@@ -21,6 +23,7 @@ class Chronometer {
   getSeconds() {
     return this.currentTime % 60;
   }
+
 
   computeTwoDigitNumber(value) {
 
