@@ -14,20 +14,29 @@ const milUniElement = document.getElementById('milUni');
 const splitsElement = document.getElementById('splits');
 
 function printTime() {
-  // ... your code goes here
+  printSeconds();
+  printMinutes();
+  printMilliseconds();
 }
 
 function printMinutes() {
-  // ... your code goes here
+  const minutes = chronometer.computeTwoDigitNumber(chronometer.getMinutes());
+  minDecElement.innerText = minutes[0];
+  minUniElement.innerText = minutes[1];
 }
 
 function printSeconds() {
-  // ... your code goes here
+  const seconds = chronometer.computeTwoDigitNumber(chronometer.getSeconds());
+  secDecElement.innerText = seconds[0];
+  secUniElement.innerText = seconds[1];
+
 }
 
 // ==> BONUS
 function printMilliseconds() {
-  // ... your code goes here
+  const miliSeconds = chronometer.getMiliSecondsStr();
+  milDecElement.innerText = miliSeconds[0];
+  milUniElement.innerText = miliSeconds[1];
 }
 
 function printSplit() {
@@ -56,10 +65,43 @@ function setResetBtn() {
 
 // Start/Stop Button
 btnLeftElement.addEventListener('click', () => {
-  // ... your code goes here
+
+  btnLeftElement.classList.toggle("stop");
+  btnLeftElement.classList.toggle("start");
+
+  btnRightElement.classList.toggle("split");
+  btnRightElement.classList.toggle("reset");
+
+  if(btnLeftElement.classList.contains("stop")){
+
+    btnLeftElement.innerText = "STOP";
+    btnRightElement.innerText = "SPLIT";
+    chronometer.start(printTime);
+
+  } else if(btnLeftElement.classList.contains("start")){
+    
+    btnLeftElement.innerText = "START";
+    btnRightElement.innerText = "RESET"
+    chronometer.stop()
+  }
+  
 });
 
 // Reset/Split Button
 btnRightElement.addEventListener('click', () => {
-  // ... your code goes here
+  if(btnRightElement.classList.contains("split")){
+    const newSplit = document.createElement("li");
+    newSplit.innerText = chronometer.split();
+    splitsElement.appendChild(newSplit);
+  } else if(btnRightElement.classList.contains("reset")){
+    minDecElement.innerText = 0;
+    minUniElement.innerText = 0;
+    secDecElement.innerText = 0;
+    secUniElement.innerText = 0;
+    milDecElement.innerText = 0;
+    milUniElement.innerText = 0;
+    while(splitsElement.firstChild){
+      splitsElement.removeChild(splitsElement.lastChild);
+    };
+  }
 });
